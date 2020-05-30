@@ -1,5 +1,7 @@
 import React from 'react';
 
+const title = 'React';
+
 function App() {
   return (
     <div>
@@ -7,4 +9,5 @@ function App() {
     </div>
   );
 }
+
 export default App;
