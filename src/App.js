@@ -56,14 +56,15 @@ const List = (props) =>
   ));
 
 const Search = (props) => {
+  conts { search, onSearch } = props;
   return (
     <div>
       <label htmlFor="search">Search: </label>
       <input
         id="search"
         type="text"
-        value={props.search}
-        onChange={props.onSearch}
+        value={search}
+        onChange={onSearch}
       />
     </div>
   );
