@@ -1,5 +1,17 @@
 import React from 'react';
 
+const useSemiPersistentState = (key) => {
+  const [value, setValue] = React.useState(
+    localStorage.getItem(key) || '',
+  );
+
+  React.useEffect(() => {
+    localStorage.setItem(key, value);
+  }, [value, key]);
+
+  return [value, setValue];
+};
+
 const App = () => {
   const stories = [
     {
@@ -20,13 +32,10 @@ const App = () => {
     },
   ];
 
-  const [searchTerm, setSearchTerm] = React.useState(
-    localStorage.getItem('search') || 'React'
+  const [searchTerm, setSearchTerm] = useSemiPersistentState(
+    'search',
+    'React',
   );
-
-  React.useEffect(() => {
-    localStorage.setItem('search', searchTerm);
-  }, [searchTerm]);
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -50,18 +59,18 @@ const App = () => {
 };
 
 const List = ({ list }) =>
-  list.map((item => <Item key={item.objectID} item={item} />);
+  list.map((item) => <Item key={item.objectID} item={item} />);
 
-  const Item = ({ item }) => (
-    <div>
-      <span>
-        <a href={item.url}>{item.title}</a>
-      </span>
-      <span>{item.author}</span>
-      <span>{item.num_comments}</span>
-      <span>{item.points}</span>
-    </div>
-  );
+const Item = ({ item }) => (
+  <div>
+    <span>
+      <a href={item.url}>{item.title}</a>
+    </span>
+    <span>{item.author}</span>
+    <span>{item.num_comments}</span>
+    <span>{item.points}</span>
+  </div>
+);
 
 const Search = ({ search, onSearch }) => {
   return (
